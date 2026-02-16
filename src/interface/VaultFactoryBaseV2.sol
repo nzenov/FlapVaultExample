@@ -105,6 +105,10 @@ import {VaultDataSchema} from "./IVaultSchemasV1.sol";
 ///        "address"  → address input (with checksum validation)
 ///        "uint16"   → number input (0–65535)
 ///        "uint256"  → big-number input
+///        "time"     → date/time picker input (alias for uint256;
+///                      value is a Unix timestamp in seconds).
+///                      When used in outputs, rendered as a
+///                      human-readable time string or countdown clock
 ///        "bool"     → checkbox
 ///        "bytes"    → hex input
 ///        "bytes32"  → hex input (32 bytes)
@@ -200,6 +204,30 @@ abstract contract VaultFactoryBaseV2 is IVaultFactory {
     ///
     /// @return schema The vault data schema for this factory.
     function vaultDataSchema() public pure virtual returns (VaultDataSchema memory schema);
+
+    /// @notice Get the VaultPortal address for the current chain.
+    ///
+    /// @dev Returns the canonical VaultPortal proxy address for the chain
+    ///      this contract is deployed on.
+    ///
+    ///      Currently supports:
+    ///        - BNB Chain   (chain ID 56)  → 0x90497450f2a706f1951b5bdda52B4E5d16f34C06
+    ///        - BNB Testnet (chain ID 97)  → 0x027e3704fC5C16522e9393d04C60A3ac5c0d775f
+    ///
+    ///      Reverts with `UnsupportedChain` if called on an unknown chain.
+    ///
+    /// @return vaultPortal The VaultPortal contract address for the current chain.
+    function _getVaultPortal() internal view returns (address vaultPortal) {
+        uint256 chainId = block.chainid;
+        if (chainId == 56) {
+            // BNB Chain VaultPortal address
+            return 0x90497450f2a706f1951b5bdda52B4E5d16f34C06;
+        } else if (chainId == 97) {
+            // BNB Testnet VaultPortal address
+            return 0x027e3704fC5C16522e9393d04C60A3ac5c0d775f;
+        }
+        revert UnsupportedChain(chainId);
+    }
 
     /// @notice Get the Guardian address for the current chain.
     ///

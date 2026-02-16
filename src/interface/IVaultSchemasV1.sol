@@ -51,6 +51,10 @@ pragma solidity ^0.8.13;
 ///        "address"  → address input (with checksum validation)
 ///        "uint16"   → number input (0–65535)
 ///        "uint256"  → big-number input
+///        "time"     → date/time picker input (alias for uint256;
+///                      value is a Unix timestamp in seconds).
+///                      When used in outputs, rendered as a
+///                      human-readable time string or countdown clock
 ///        "bool"     → checkbox
 ///        "bytes"    → hex input
 ///        "bytes32"  → hex input (32 bytes)
@@ -85,6 +89,8 @@ pragma solidity ^0.8.13;
 ///           - If method.isInputArray == true, render an "Add Item" button.
 ///         - For outputs: use field.decimals to format numeric values
 ///           (e.g. decimals=18: raw 1.5e18 → display "1.5").
+///           For "time" fields, display the raw uint256 value as a
+///           human-readable time string or a countdown clock.
 ///         - Derive the ABI type string from outputs[].fieldType +
 ///           method.isOutputArray.
 ///         - Use field.name and field.description as column headers/tooltips.
@@ -95,6 +101,8 @@ pragma solidity ^0.8.13;
 ///             "address" → address input with checksum validation
 ///             "uint256" → big-number input
 ///             "uint128" → number input
+///             "time"    → date/time picker input (alias for uint256;
+///                          value is a Unix timestamp in seconds)
 ///             "string"  → text input
 ///             "bytes"   → hex input
 ///             "bool"    → checkbox
@@ -139,6 +147,13 @@ pragma solidity ^0.8.13;
 /// @param fieldType   Solidity ABI type string for the field.
 ///                    Examples: "string", "address", "uint16", "uint256", "uint128",
 ///                    "bool", "bytes", "bytes32".
+///                    The special value "time" is an alias for "uint256".
+///                    The encoded value is a Unix timestamp in seconds.
+///                    For ABI encoding purposes the UI treats "time"
+///                    identically to "uint256".
+///                    - As an **input**, the UI renders a date/time picker.
+///                    - As an **output**, the UI renders the value as a
+///                      human-readable time string or a countdown clock.
 ///                    The UI uses this to decide which input widget to render
 ///                    and how to ABI-encode/decode the value.
 ///
