@@ -2,17 +2,17 @@
 
 pragma solidity ^0.8.13;
 
-import {VaultBase} from "../interface/VaultBase.sol";
-import {VaultBaseV2} from "../interface/VaultBaseV2.sol";
-import {VaultFactoryBaseV2} from "../interface/VaultFactoryBaseV2.sol";
-import {IVaultFactory} from "../interface/IVaultFactory.sol";
+import {VaultBase} from "../flap/VaultBase.sol";
+import {VaultBaseV2} from "../flap/VaultBaseV2.sol";
+import {VaultFactoryBaseV2} from "../flap/VaultFactoryBaseV2.sol";
+import {IVaultFactory} from "../flap/IVaultFactory.sol";
 import {
     VaultUISchema,
     VaultMethodSchema,
     VaultDataSchema,
     FieldDescriptor,
     ApproveAction
-} from "../interface/IVaultSchemasV1.sol";
+} from "../flap/IVaultSchemasV1.sol";
 
 /// @title FreeCoinVault
 /// @notice A vault that distributes free BNB rewards to anyone who calls `claim()`.

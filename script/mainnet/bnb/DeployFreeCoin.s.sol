@@ -5,7 +5,7 @@ pragma solidity ^0.8.13;
 import {Script, console} from "forge-std/Script.sol";
 import {FreeCoinVaultFactory} from "../../../src/Vaults/FreeCoin.sol";
 import {FlapDeployed} from "../../../src/FlapDeployed.sol";
-import {IVaultPortal, IVaultPortalTypes} from "../../../src/interface/IVaultPortal.sol";
+import {IVaultPortal, IVaultPortalTypes} from "../../../src/flap/IVaultPortal.sol";
 
 /// @title DeployFreeCoin
 /// @notice Deploys the FreeCoinVaultFactory to BNB mainnet (chainId 56)
