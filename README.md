@@ -7,19 +7,39 @@
 This repo will include example implementations of Flap Tax Vaults using the new V2 interfaces. We will udpate more examples in the future, but for now, we have implemented a simple "FreeCoin" vault that gives free BNB to users who call the `claim()` function, with a cooldown period and a maximum reward limit.  
 
 
+## Directory Structure
+
+The only mandated and immutable directory is `src/flap/`. It contains the canonical Flap vault interface files. Your own vault source files live directly under `src/`, alongside `src/flap/`.
+
+```
+src/
+├── flap/              ← REQUIRED & IMMUTABLE — do not rename or modify
+│   ├── IPortal.sol
+│   ├── IVaultFactory.sol
+│   ├── IVaultPortal.sol
+│   ├── IVaultSchemasV1.sol
+│   ├── VaultBase.sol
+│   ├── VaultBaseV2.sol
+│   └── VaultFactoryBaseV2.sol
+└── YourVault.sol      ← your vault implementation(s) go here
+```
+
+> ⚠️ Future compliance checkers will assume `src/flap/` exists with exactly this structure. Do not rename or relocate this directory.
+
+
 ## The Flap Tax Vault V2 Interfaces 
 
 Flap Tax Vault V2 are fully compatible with the V1 version. The main difference is that the V2 version uses the new VaultFactoryBaseV2 and VaultBaseV2 interfaces, which include additional functions for UI schema and metadata. With these UI schema functions, the vault can provide more information about its parameters and how to interact with it, which can be used for automatically generating user interfaces on Flap.sh.  
 
-- [VaultFactoryBaseV2](src/interface/VaultFactoryBaseV2.sol): This is the base interface for vault factories. It includes functions for creating vaults, as well as new functions for providing metadata and UI schema for the vaults it creates.   
-- [VaultBaseV2](src/interface/VaultBaseV2.sol): This is the base interface for vaults. It includes functions for interacting with the vault, as well as new functions for providing metadata and UI schema for the vault itself.   
+- [VaultFactoryBaseV2](src/flap/VaultFactoryBaseV2.sol): This is the base interface for vault factories. It includes functions for creating vaults, as well as new functions for providing metadata and UI schema for the vaults it creates.   
+- [VaultBaseV2](src/flap/VaultBaseV2.sol): This is the base interface for vaults. It includes functions for interacting with the vault, as well as new functions for providing metadata and UI schema for the vault itself.   
 
 All the above interfaces include very detailed NatSpec comments that describe the purpose and usage of each function, as well as the expected behavior of the vaults. We encourage you to read through the interfaces to understand how to implement your own vaults using the V2 version. 
 
 
 ## The FreeCoin Vault Example  
 
-For example, for the [FreeCoin](src/Vaults/FreeCoin.sol) vault, the factory has `vaultDataSchema()` function that describes the parameters of the vault:  
+For example, for the [FreeCoin](src/FreeCoin.sol) vault, the factory has `vaultDataSchema()` function that describes the parameters of the vault:  
 
 
 ```solidity 
